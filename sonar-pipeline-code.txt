@@ -1,0 +1,15 @@
+node {
+  stage ('SCM') {
+    git 'https://github.com/diegoneuralo/maven.git'
+  }
+  stage ('Build'){
+  bat 'mvn clean package'
+  }
+  stage ('sonar '){
+     class Constants {
+	  static final SONAR_URL = 'http://localhost:9000'
+	 }
+	 load 'common/Constants.groovy'
+	 bat 'mvn -e sonar:sonar'
+  }
+}
